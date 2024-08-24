@@ -10,6 +10,6 @@ public class QuestionController {
 
     @GetMapping("allQuestions")
     public String getAllQuestions(){
-        return "hey buddy!! These are the questions you looking for";
+        return "hey buddy!! These are the questions looking for you";
     }
 }
