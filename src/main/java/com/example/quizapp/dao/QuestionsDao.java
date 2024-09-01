@@ -11,4 +11,5 @@ public interface QuestionsDao extends JpaRepository<Questions,Integer> {
 
     List<Questions> findByCategory(String category);
 
+    List<Questions> findByDifficultyLevel(String difficultyLevel);
 }

@@ -3,6 +3,7 @@ package com.example.quizapp.controller;
 import com.example.quizapp.Questions;
 import com.example.quizapp.service.QuestionsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,21 +15,28 @@ public class QuestionsController {
     @Autowired
     QuestionsService questionsService;
 
-    @GetMapping("allQuestions")
-    public List<Questions> getAllQuestions(){
-        List<Questions> questions = questionsService.getAllQuestions();
-        System.out.println(questions);
-        return questions;
+    @RequestMapping("allQuestions")
+    public ResponseEntity<List<Questions>> getQuestionsByDifficultyLevel(@RequestParam(required = false, name = "difficulty") String difficultyLevel) {
+        if (difficultyLevel != null) {
+            return questionsService.getQuestionsByDifficultyLevel(difficultyLevel);
+        }
+
+        return questionsService.getAllQuestions();
     }
 
     @GetMapping("category/{category}")
-    public List<Questions> getQuestionsByCategory(@PathVariable String category){
+    public ResponseEntity<List<Questions>> getQuestionsByCategory(@PathVariable String category){
         return questionsService.getQuestionsByCategory(category);
     }
 
+//    @GetMapping("difficulty/{difficultyLevel}")
+//    public ResponseEntity<List<Questions>> getQuestionsByDifficultyLevel(@PathVariable String difficultyLevel){
+//         return questionsService.getQuestionsByDifficultyLevel(difficultyLevel);
+//    }
+
     @PostMapping("add")
-    public String addQuestion(@RequestBody Questions questions){
-        return questionsService.addQuestion(questions);
+    public ResponseEntity<String> addQuestion(@RequestBody Questions questions){
+        return new ResponseEntity<>(questionsService.addQuestion(questions).getStatusCode());
     }
 
 }
