@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("question")
+@RequestMapping("/api/questions")
 public class QuestionsController {
 
     @Autowired
     QuestionsService questionsService;
 
-    @RequestMapping("allQuestions")
-    public ResponseEntity<List<Questions>> getQuestionsByDifficultyLevel(@RequestParam(required = false, name = "difficulty") String difficultyLevel) {
+    @RequestMapping("")
+    public ResponseEntity<List<Questions>> getQuestions(@RequestParam(required = false, name = "difficulty") String difficultyLevel) {
         if (difficultyLevel != null) {
             return questionsService.getQuestionsByDifficultyLevel(difficultyLevel);
         }
@@ -24,17 +24,17 @@ public class QuestionsController {
         return questionsService.getAllQuestions();
     }
 
-    @GetMapping("category/{category}")
-    public ResponseEntity<List<Questions>> getQuestionsByCategory(@PathVariable String category){
-        return questionsService.getQuestionsByCategory(category);
-    }
+//    @GetMapping("category/{category}")
+//    public ResponseEntity<List<Questions>> getQuestionsByCategory(@PathVariable String category){
+//        return questionsService.getQuestionsByCategory(category);
+//    }
 
 //    @GetMapping("difficulty/{difficultyLevel}")
 //    public ResponseEntity<List<Questions>> getQuestionsByDifficultyLevel(@PathVariable String difficultyLevel){
 //         return questionsService.getQuestionsByDifficultyLevel(difficultyLevel);
 //    }
 
-    @PostMapping("add")
+    @PostMapping("")
     public ResponseEntity<String> addQuestion(@RequestBody Questions questions){
         return new ResponseEntity<>(questionsService.addQuestion(questions).getStatusCode());
     }
